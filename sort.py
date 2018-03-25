@@ -62,22 +62,10 @@ def merge(lst, start, end):
 def quick_sort(lst):
     if len(lst) <= 1:
         return lst
-    pivot = randint(0, len(lst) - 1)
-    small = []
-    same = []
-    large = []
-    for i in range(len(lst)):
-        if lst[i] < lst[pivot]:
-            small.append(lst[i])
-        elif lst[i] > lst[pivot]:
-            large.append(lst[i])
-        else:
-            same.append(lst[i])
-    small = quick_sort(small)
-    large = quick_sort(large)
-    small += same
-    small += large
-    return small
+    p = randint(0, len(lst) - 1)
+    piv = lst[p]
+    return quick_sort([x for x in lst if x < piv]) + \
+            [x for x in lst if x == piv] + quick_sort([x for x in lst if x > piv])
 
 def heap_sort(lst):
     lst = build_heap(lst)
@@ -123,7 +111,7 @@ def compare_child(lst, left, right):
     return right, left
 
 
-lst = [-1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, -4, 3, 10]
+lst = [-1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, -4, 5, -5, 7, 3, 10]
 print(selection_sort(lst))
 print(insertion_sort(lst))
 print(bubble_sort(lst))
