@@ -76,10 +76,56 @@ def quick_sort(lst):
     small += large
     return small
 
+def heap_sort(lst):
+    lst = build_heap(lst)
+    end = len(lst) - 1
+    while end > 0:
+        lst[0], lst[end] = lst[end], lst[0]
+        lst = perc_down(lst, 0, end)
+        end -= 1
+    return lst
+
+
+def build_heap(lst):
+    for i in reversed(range(0, len(lst)//2)):
+        lst = perc_down(lst, i, len(lst))
+    return lst
+
+def perc_down(lst, i, end):
+    left = 2 * i + 1
+    right = 2 * i + 2
+    while left < end and right < end:
+        max_child, min_child = compare_child(lst, left, right)
+        if lst[i] > lst[max_child]:
+            return lst
+        if lst[i] < lst[max_child]:
+            lst[i], lst[max_child] = lst[max_child], lst[i]
+            i = max_child
+        elif lst[i] < lst[min_child]:
+            lst[i], lst[min_child] = lst[min_child], lst[i]
+            i = min_child
+        left = 2 * i + 1
+        right = 2 * i + 2
+    while left < end:
+        if lst[i] < lst[left]:
+            lst[left], lst[i] = lst[i], lst[left]
+            i = left
+            left = 2 * i + 1
+        return lst
+    return lst
+
+def compare_child(lst, left, right):
+    if lst[left] > lst[right]:
+        return left, right
+    return right, left
+
+
 lst = [-1, 4, 2, -4, 3, 10]
 print(selection_sort(lst))
 print(insertion_sort(lst))
 print(bubble_sort(lst))
 print(merge_sort(lst))
 print(quick_sort(lst))
+print(lst)
+print(heap_sort(lst))
 
