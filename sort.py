@@ -64,15 +64,18 @@ def quick_sort(lst):
         return lst
     pivot = randint(0, len(lst) - 1)
     small = []
+    same = []
     large = []
     for i in range(len(lst)):
-        if i != pivot and lst[i] < lst[pivot]:
+        if lst[i] < lst[pivot]:
             small.append(lst[i])
-        elif i != pivot and lst[i] >= lst[pivot]:
+        elif lst[i] > lst[pivot]:
             large.append(lst[i])
+        else:
+            same.append(lst[i])
     small = quick_sort(small)
     large = quick_sort(large)
-    small += lst[pivot : pivot + 1]
+    small += same
     small += large
     return small
 
@@ -96,7 +99,7 @@ def perc_down(lst, i, end):
     right = 2 * i + 2
     while left < end and right < end:
         max_child, min_child = compare_child(lst, left, right)
-        if lst[i] > lst[max_child]:
+        if lst[i] >= lst[max_child]:
             return lst
         if lst[i] < lst[max_child]:
             lst[i], lst[max_child] = lst[max_child], lst[i]
@@ -120,12 +123,11 @@ def compare_child(lst, left, right):
     return right, left
 
 
-lst = [-1, 4, 2, -4, 3, 10]
+lst = [-1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, -4, 3, 10]
 print(selection_sort(lst))
 print(insertion_sort(lst))
 print(bubble_sort(lst))
 print(merge_sort(lst))
 print(quick_sort(lst))
-print(lst)
 print(heap_sort(lst))
 
