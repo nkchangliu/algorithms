@@ -6,6 +6,7 @@
 # heap
 # bucket sort
 # radix sort
+import math
 from random import randint
 
 def selection_sort(lst):
@@ -110,12 +111,46 @@ def compare_child(lst, left, right):
         return left, right
     return right, left
 
+def bucket_sort(lst, num_bucket = 10):
+    buckets = [[] for i in range(num_bucket)]
+    maxi, mini = max(lst), min(lst)
+    step = math.ceil((maxi - mini) / num_bucket)
+    for num in lst:
+        buckets[(num - mini) // step].append(num)
+    for bucket in buckets:
+        insertion_sort(bucket)
+    result = []
+    for bucket in buckets:
+        result += bucket
+    return result
 
-lst = [-1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, -4, 5, -5, 7, 3, 10]
+def radix_sort(lst):
+    max_digit =len(str(max(lst)))
+    buckets = [[] for i in range(10)]
+    for num in lst:
+        buckets[num % 10].append(num)
+    for i in range(1, max_digit):
+        buckets = radix_sort_helper(buckets, i)
+    result = []
+    for bucket in buckets:
+        result += bucket
+    return result
+
+def radix_sort_helper(buckets, i):
+    new_buckets = [[] for i in range(10)]
+    for bucket in buckets:
+        for num in bucket:
+            new_buckets[(num // 10 ** i) % 10].append(num)
+    return new_buckets
+
+lst = [-1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, -4, 5, -5, 7, 3, 10, 25, 87, 32, 45,57, 61]
 print(selection_sort(lst))
 print(insertion_sort(lst))
 print(bubble_sort(lst))
 print(merge_sort(lst))
 print(quick_sort(lst))
 print(heap_sort(lst))
-
+print(bucket_sort(lst))
+radix_lst = [randint(0, 999) for i in range(100)]
+print(radix_lst)
+print(radix_sort(radix_lst))
