@@ -6,6 +6,7 @@
 # heap
 # bucket sort
 # radix sort
+# sort a stack using another stack
 import math
 from random import randint
 
@@ -143,6 +144,19 @@ def radix_sort_helper(buckets, i):
             new_buckets[(num // 10 ** i) % 10].append(num)
     return new_buckets
 
+
+def stack_sort(lst):
+    new_l = []
+    while lst:
+        value = lst.pop()
+        if not new_l or value >= new_l[-1]:
+            new_l.append(value)
+        else:
+            while new_l:
+                lst.append(new_l.pop())
+            new_l.append(value)
+    return new_l
+
 lst = [-1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, -4, 5, -5, 7, 3, 10, 25, 87, 32, 45,57, 61]
 print(selection_sort(lst))
 print(insertion_sort(lst))
@@ -151,6 +165,7 @@ print(merge_sort(lst))
 print(quick_sort(lst))
 print(heap_sort(lst))
 print(bucket_sort(lst))
+print(stack_sort(lst))
 radix_lst = [randint(0, 999) for i in range(100)]
 print(radix_lst)
 print(radix_sort(radix_lst))
