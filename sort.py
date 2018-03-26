@@ -7,6 +7,8 @@
 # bucket sort
 # radix sort
 # sort a stack using another stack
+# pancake sort
+
 import math
 from random import randint
 
@@ -25,13 +27,10 @@ def insertion_sort(lst):
     return lst
 
 def bubble_sort(lst):
-    sort = False
-    while not sorted:
-        sort = True
-        for i in range(len(lst) - 1):
-            if lst[i] > lst[i + 1]:
-                lst[i + 1], lst[i] = lst[i], lst[i + 1]
-                sort = False
+    for i in range(len(lst)):
+        for j in range(len(lst) - 1):
+            if lst[j] > lst[j + 1]:
+                lst[j], lst[j + 1] = lst[j + 1], lst[j]
     return lst
 
 def merge_sort(lst):
@@ -157,15 +156,26 @@ def stack_sort(lst):
             new_l.append(value)
     return new_l
 
-lst = [-1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, -4, 5, -5, 7, 3, 10, 25, 87, 32, 45,57, 61]
-print(selection_sort(lst))
-print(insertion_sort(lst))
-print(bubble_sort(lst))
-print(merge_sort(lst))
-print(quick_sort(lst))
-print(heap_sort(lst))
-print(bucket_sort(lst))
-print(stack_sort(lst))
-radix_lst = [randint(0, 999) for i in range(100)]
-print(radix_lst)
-print(radix_sort(radix_lst))
+def pancake_sort(lst):
+    for i in range(len(lst) - 1):
+        if lst[i] > lst[i + 1]:
+            j = 0
+            while lst[j] < lst[i + 1]:
+                j += 1
+            reverse_lst = [x for x in reversed(lst[j : i + 2])]
+            lst = lst[0 : j] + [lst[i + 1]] + [x for x in reversed(reverse_lst[1:])] + lst[i + 2 :]
+    return lst
+
+lst = [-1, 4, 4, 2, -4, 5, -5, 7, 3, 10, 25, 87, 32, 45,57, 61]
+#print(selection_sort(lst))
+#print(insertion_sort(lst))
+#print(bubble_sort(lst))
+#print(merge_sort(lst))
+#print(quick_sort(lst))
+#print(heap_sort(lst))
+#print(bucket_sort(lst))
+print(pancake_sort(lst))
+#print(stack_sort(lst))
+#radix_lst = [randint(0, 999) for i in range(100)]
+#print(radix_lst)
+#print(radix_sort(radix_lst))
