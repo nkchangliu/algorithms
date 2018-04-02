@@ -166,6 +166,22 @@ def pancake_sort(lst):
             lst = lst[0 : j] + [lst[i + 1]] + [x for x in reversed(reverse_lst[1:])] + lst[i + 2 :]
     return lst
 
+def binary_search(lst, start, end, value):
+    if start == end:
+        if lst[start] == value:
+            return start
+        return -1
+    mid = (start + end) // 2
+    if value == lst[mid]:
+        return mid
+    elif value < lst[mid]:
+        return binary_search(lst, start, mid, value)
+    else:
+        return binary_search(lst, mid + 1, end, value)
+
+def binary_search_lst(lst, value):
+    return binary_search(lst, 0, len(lst) - 1, value)
+
 lst = [-1, 4, 4, 2, -4, 5, -5, 7, 3, 10, 25, 87, 32, 45,57, 61]
 #print(selection_sort(lst))
 #print(insertion_sort(lst))
@@ -174,8 +190,13 @@ lst = [-1, 4, 4, 2, -4, 5, -5, 7, 3, 10, 25, 87, 32, 45,57, 61]
 #print(quick_sort(lst))
 #print(heap_sort(lst))
 #print(bucket_sort(lst))
-print(pancake_sort(lst))
+#print(pancake_sort(lst))
 #print(stack_sort(lst))
 #radix_lst = [randint(0, 999) for i in range(100)]
 #print(radix_lst)
 #print(radix_sort(radix_lst))
+lst = [2, 4, 5, 6, 9, 10, 34, 67, 89]
+print(binary_search_lst(lst, 10))
+print(binary_search_lst(lst, 2))
+print(binary_search_lst(lst, 89))
+print(binary_search_lst(lst, 5))
