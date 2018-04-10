@@ -1,3 +1,7 @@
+import sys, threading
+sys.setrecursionlimit(800000)
+threading.stack_size(67108864)
+
 from graph import Graph
 
 def find_shortest_path_unweighted(graph, start):
@@ -79,8 +83,20 @@ def kosaraju(graph):
     for node in leader:
         while leader[node] in leader:
             leader[node] = leader[leader[node]]
-    res = set()
-    return leader
+    res = {}
+    for node in leader:
+        value = leader[node]
+        if value not in res:
+            res[value] = set()
+            res[value].add(value)
+        res[value].add(node)
+    sort_res = sorted(res.keys(), key=lambda s: len(res.get(s)))
+
+    size = []
+    for i in range(1,6):
+        if i <= len(sort_res):
+           size.append(len(res.get(sort_res[-i])))
+    return size
 
 def kosaraju_DFS(graph, graph_order):
     # topologial sort of a DAG using DFS
@@ -103,7 +119,7 @@ def kosaraju_DFS_helper(graph, start, visited, order, leader):
 
 
 
-def test():
+def main():
     file = open("scc.txt", "r")
     lst = file.readlines()
     res = [i.rstrip(' \n').split(" ") for i in lst]
@@ -111,10 +127,13 @@ def test():
     for r in res:
        int_res.append([int(i) for i in r])
     graph = Graph()
-    for r in res:
+    for r in int_res:
         graph.add_node(r[0])
         graph.add_node(r[1])
-    for r in res:
+    for r in int_res:
         graph.add_edge(r[0], r[1])
     print(kosaraju(graph))
-test()
+
+
+thread = threading.Thread(target = main)
+thread.start()
