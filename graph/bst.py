@@ -128,16 +128,5 @@ def insert_helper(root, node):
         root.left.parent = root
     return root
 
-bst = BST()
-bst.insert(4)
-bst.insert(5)
-bst.insert(7)
-bst.insert(6)
-bst.insert(1)
-bst.insert(3)
-bst.insert(2)
-print(bst.root)
-print(bst.in_order())
-bst.delete(1)
-print(bst.in_order())
+
 
