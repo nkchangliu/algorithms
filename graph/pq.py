@@ -2,9 +2,22 @@
 
 class PriorityQueue(object):
 
-    def __init__(self):
+    def __init__(self, lst = None):
         self.lst = []
         self.location = {}
+        if lst:
+            self.heaptify(lst)
+
+    def size(self):
+        return len(self.lst)
+
+    def heaptify(self, lst):
+        self.lst = lst
+        for ind, pair in enumerate(lst):
+            self.location[pair[1]] = ind
+        for i in reversed(range(0, len(self.lst) // 2)):
+                self.percolate_down(i)
+
 
     def insert(self, priority, ele):
         if ele in self.location:
@@ -36,6 +49,11 @@ class PriorityQueue(object):
         self.location.pop(ele)
         self.percolate_down(0)
         return prio, ele
+
+    def get_min(self):
+        if self.is_empty():
+            raise IndexError("empty heap")
+        return self.lst[0]
 
     def percolate_down(self, ind):
         length = len(self.lst)
@@ -71,5 +89,6 @@ class PriorityQueue(object):
         self.lst[ind1], self.lst[ind2] = self.lst[ind2], self.lst[ind1]
         ele1, ele2 = self.lst[ind1][1], self.lst[ind2][1]
         self.location[ele1], self.location[ele2] = ind1, ind2
+
 
 
