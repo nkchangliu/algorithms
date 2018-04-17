@@ -84,9 +84,9 @@ def find(parent, num, vertice):
 def union(parent, num, vertice1, vertice2):
     parent1 = find(parent, num, vertice1)
     parent2 = find(parent, num, vertice2)
-    if num[parent1] >= num[parent2]:
+    if num[parent1] > num[parent2]:
         parent[parent2] = parent1
-    elif:
+    elif num[parent1] < num[parent2]:
         parent[parent1] = parent2
     else:
         parent[parent1] = parent2
