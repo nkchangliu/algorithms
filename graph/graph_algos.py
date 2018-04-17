@@ -53,7 +53,43 @@ def prim(graph, start):
     return edge, overall_cost
 
 
+def kruskal(graph):
+    spanning_tree = set()
+    edges_list = sort_edge(graph)
+    parent = {}
+    num = {}
 
+    for node in graph.nodes():
+        parent[node] = node
+        num[node] = 1
+    for vertice1, vertice2, weight in edges_list:
+        if find(parent, num, vertice1) != find(parent, num, vertice2):
+            union(parent, num, vertice1, vertice2)
+            spanning_tree.add((vertice1, vertice2, weight))
+    return spanning_tree
+
+def sort_edge(graph):
+    edge_list = []
+    for start in graph.adjacency_list:
+        for end, cost in graph.adjacency_list[start]:
+            if end > start:
+                edge_list.append((start, end, cost))
+    return sorted(edge_list, key = lambda pair: pair[2])
+
+def find(parent, num, vertice):
+    if parent[vertice] != vertice:
+        parent[vertice] = find(parent, num, parent[vertice])
+    return parent[vertice]
+
+def union(parent, num, vertice1, vertice2):
+    parent1 = find(parent, num, vertice1)
+    parent2 = find(parent, num, vertice2)
+    if num[parent1] >= num[parent2]:
+        parent[parent2] = parent1
+        num[parent1] += num[parent2]
+    else:
+        parent[parent1] = parent2
+        num[parent2] += num[parent1]
 
 class Graph(object):
     def __init__(self):
@@ -105,4 +141,4 @@ def test_prim():
 
 
 if __name__ == '__main__':
-    test_prim()
+    test()
