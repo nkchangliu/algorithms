@@ -61,7 +61,7 @@ def kruskal(graph):
 
     for node in graph.nodes():
         parent[node] = node
-        num[node] = 1
+        num[node] = 0
     for vertice1, vertice2, weight in edges_list:
         if find(parent, num, vertice1) != find(parent, num, vertice2):
             union(parent, num, vertice1, vertice2)
@@ -86,10 +86,11 @@ def union(parent, num, vertice1, vertice2):
     parent2 = find(parent, num, vertice2)
     if num[parent1] >= num[parent2]:
         parent[parent2] = parent1
-        num[parent1] += num[parent2]
+    elif:
+        parent[parent1] = parent2
     else:
         parent[parent1] = parent2
-        num[parent2] += num[parent1]
+        num[parent2] += 1
 
 class Graph(object):
     def __init__(self):
