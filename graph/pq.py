@@ -71,7 +71,7 @@ class PriorityQueue(object):
                 else:
                     minchild = right
 
-            if self.lst[minchild] < self.lst[ind]:
+            if self.lst[minchild][0] < self.lst[ind][0]:
                 self.swap(minchild, ind)
                 ind = minchild
             else:
