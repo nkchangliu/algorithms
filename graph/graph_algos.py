@@ -1,6 +1,7 @@
 # dijkstra's algorithm to solve single source shortest path
 
 from pq import PriorityQueue
+from disjointset import DisjointSet
 
 def dijkstra(graph, start):
     prev = {}
@@ -92,6 +93,24 @@ def union(parent, num, vertice1, vertice2):
         parent[parent1] = parent2
         num[parent2] += 1
 
+# solve the single link cluster problem using kruskal
+def solve_cluster(graph, k):
+    sorted_list = sort_edge(graph)
+    disjoint_set = DisjointSet(graph.nodes())
+
+    for vertice1, vertice2, space in sorted_list:
+        if len(disjoint_set.return_parents()) > k:
+            if disjoint_set.find(vertice1) != disjoint_set.find(vertice2):
+                disjoint_set.union(vertice1, vertice2)
+        else:
+            break
+
+    for edge in sorted_list:
+        vertice1, vertice2, space = edge
+        if disjoint_set.find(vertice1) != disjoint_set.find(vertice2):
+            return space
+    return None
+
 class Graph(object):
     def __init__(self):
         self.adjacency_list = {}
@@ -140,6 +159,20 @@ def test_prim():
         graph.add_edge(start, end, cost)
     print(prim(graph, 1))
 
+def test_cluster():
+    file = open("distance.txt", "r")
+    lst = file.readlines()
+    lst = [l.strip('\n').split(' ') for l in lst]
+    graph = Graph()
+    num_nodes = lst[0][0]
+    for i in range(1, int(num_nodes) + 1):
+        graph.add_node(i)
+    for l in lst[1:]:
+        start = int(l[0])
+        end = int(l[1])
+        cost = int(l[2])
+        graph.add_edge(start, end, cost)
+    print(solve_cluster(graph, 4))
 
 if __name__ == '__main__':
-    test()
+    test_cluster()

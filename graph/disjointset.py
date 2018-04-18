@@ -25,5 +25,23 @@ class DisjointSet(object):
             self.parent[parent2] = parent1
             self.rank[parent1] += 1
 
+    def return_parents(self):
+        parents = set()
+        for ele in self.parent:
+            if ele == self.parent[ele]:
+                parents.add(ele)
+
+        return parents
+
+    def return_sets(self):
+        sets = {}
+        for parent in self.return_parents():
+            sets[parent] = set()
+
+        for ele in self.parent:
+            parent = self.find(ele)
+            sets[parent].add(ele)
+
+        return sets
 
 
