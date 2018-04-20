@@ -1,11 +1,12 @@
 from tree_node import TreeNode
 from pq import PriorityQueue
 from collections import Counter
+import operator
 
-def get_huffman_tree(s):
+def get_huffman_tree(frequency_lst):
     frequency_lst = Counter(s)
     pq = PriorityQueue()
-    for char, freq in frequency_lst.items():
+    for char, freq in frequency_lst:
         pq.insert(freq, TreeNode(char))
 
     while pq.size() > 1:
@@ -34,6 +35,5 @@ def encode(string):
     for s in string:
          res += code_dict[s]
     return res
-
 
 
