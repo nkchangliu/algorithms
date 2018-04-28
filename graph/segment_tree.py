@@ -1,6 +1,6 @@
-# create a segement tree that has stores the min of the lst
+# create a segment tree that has stores the min of the lst
 
-def segement_tree(lst):
+def segment_tree(lst):
     num = len(lst)
     res = [None] * len_needed(len(lst))
     return create_tree(lst, res, 0, len(lst) - 1, 0)
@@ -17,24 +17,24 @@ def create_tree(lst, res, low, high, pos):
     return res
 
 def min_in_range(lst, search_low, search_high):
-    segement = segement_tree(lst)
-    return find_min(segement, 0, len(lst) -1, search_low, search_high, 0)
+    segment = segment_tree(lst)
+    return find_min(segment, 0, len(lst) -1, search_low, search_high, 0)
 
 
-def find_min(segement, low, high, search_low, search_high, pos):
+def find_min(segment, low, high, search_low, search_high, pos):
     # case 1: does not contain the range we look for
     if search_low > high or search_high < low:
         return float("inf")
 
     # case 2: contains the range
     elif search_low <= low and search_high >= high:
-        return segement[pos]
+        return segment[pos]
 
     # case 3: partially contain the range
     else:
         mid = (low + high) // 2
-        left = find_min(segement, low, mid, search_low, search_high, 2 * pos + 1)
-        right = find_min(segement, mid + 1, high, search_low, search_high, 2 * pos + 2)
+        left = find_min(segment, low, mid, search_low, search_high, 2 * pos + 1)
+        right = find_min(segment, mid + 1, high, search_low, search_high, 2 * pos + 2)
         return min(left, right)
 
 def len_needed(length):
