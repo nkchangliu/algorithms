@@ -33,5 +33,11 @@ class Graph(object):
     def get_cost(self, start, end):
         return self.cost[(start, end)]
 
+    def update_edge(self, start, end, new_cost):
+        self.cost[(start, end)] = new_cost
+
+    def edges(self):
+        return self.cost.keys()
+
 
 
