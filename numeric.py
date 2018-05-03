@@ -1,4 +1,5 @@
 from random import randint
+from random import uniform
 
 # implement the grade school multiplication
 
@@ -96,5 +97,28 @@ def quick_select(lst, n):
         return pivot
     else:
         return quick_select(less_lst, n - len(large_lst) - len(same_lst))
+
+# use monte carlo method to calculate pi
+
+def calculate_pi(n):
+    within_circle = 0
+    for i in range(n):
+        x = uniform(-1, 1)
+        y = uniform(-1, 1)
+        if x **2 + y ** 2 <= 1:
+            within_circle += 1
+    return within_circle / n * 4
+
+
+def reservoir_sample(lst, k):
+    reserve = []
+    for i in range(k):
+        reserve.append(lst[i])
+    for i in range(k, len(lst)):
+        rand = randint(0, i)
+        if rand < k:
+            reserve[rand] = lst[i]
+    return reserve
+
 
 
