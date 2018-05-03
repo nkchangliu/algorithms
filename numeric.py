@@ -64,3 +64,21 @@ def newton_method(num, delta):
     return x
 
 
+# return all the primes up until n using the Sieve of Eratosthenes method
+def find_prime(n):
+    if n < 2:
+        return []
+    prime_lst = [2]
+    lst = [i for i in range(3, n+1)]
+
+    while lst:
+        new_lst = []
+        for num in lst:
+            if num % prime_lst[-1] != 0:
+                new_lst.append(num)
+        lst = new_lst
+        if lst:
+            prime_lst.append(lst[0])
+    return prime_lst
+
+
