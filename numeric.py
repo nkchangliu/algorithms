@@ -1,3 +1,5 @@
+from random import randint
+
 # implement the grade school multiplication
 
 def multiplication_naive(num1, num2):
@@ -80,5 +82,19 @@ def find_prime(n):
         if lst:
             prime_lst.append(lst[0])
     return prime_lst
+
+
+# select the nth largest element in the lst
+def quick_select(lst, n):
+    pivot = lst[randint(0, len(lst)-1)]
+    less_lst = [x for x in lst if x < pivot]
+    same_lst = [x for x in lst if x == pivot]
+    large_lst = [x for x in lst if x > pivot]
+    if n <= len(large_lst):
+        return quick_select(large_lst, n)
+    elif n <= len(large_lst) + len(same_lst):
+        return pivot
+    else:
+        return quick_select(less_lst, n - len(large_lst) - len(same_lst))
 
 
