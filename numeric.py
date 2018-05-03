@@ -53,3 +53,14 @@ n1 = 3141592653589793238462643383279502884197169399375105820974944592
 n2 = 2718281828459045235360287471352662497757247093699959574966967627
 print(multiplication_naive(n1, n2))
 print(multiplication_kara(n1, n2))
+
+
+
+# use newton method to find the square root of a num
+def newton_method(num, delta):
+    x = num // 2 + 1
+    while x * x - num > delta * delta:
+        x = 1/2 * (x + num/x)
+    return x
+
+
