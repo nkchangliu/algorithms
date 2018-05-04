@@ -132,4 +132,28 @@ def gcd(num1, num2):
         return gcd(num2, reminder)
 
 
+def exponentiation_square(x, n):
+    if n < 0:
+        return exponentiation_square(1/x, -n)
+    elif n == 0:
+        return 1
+    elif n == 1:
+        return x
+    elif n % 2 == 0:
+        return exponentiation_square(x * x, n // 2)
+    else:
+        return exponentiation_square(x * x, (n - 1) // 2)
+
+# kahan summation algorithm to sum up float point numbers
+def summation(lst):
+
+    res = 0.0
+    compensation = 0.0
+    for num in lst:
+        y = num - compensation
+        total = res + y
+        compensation = total - res - y
+        res = total
+    return res
+
 
